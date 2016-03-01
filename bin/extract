@@ -1,0 +1,95 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'fepath'
+require 'mechanize'
+require 'fileutils'
+require 'pry'
+require 'rack'
+
+domain = 'https://online.theironyard.com'
+base_path_url = domain + '/admin'
+first_url = base_path_url + '/paths/my_paths'
+
+def extract_all_paths(page)
+  page.search('table.table tbody tr a').map do |path_el|
+    path_el.attr('href')
+  end
+end
+
+def get_authorized_agent(url)
+  a = Mechanize.new do |agent|
+    agent.user_agent_alias = 'Mac Safari'
+  end
+  final_page = nil
+
+  a.get(url) do |page|
+    # sign in here
+    new_page = page.form_with(id: 'new_user') do |sign_in_form|
+      sign_in_form.field_with(id: 'user_email').value = ENV['TIYO_USER']
+      sign_in_form.field_with(id: 'user_password').value = ENV['TIYO_PASS']
+    end.submit
+    final_page = new_page
+  end
+
+  [a, final_page]
+end
+
+def path_gids_to_apilike_json(data)
+  unit_data = data.group_by { |page| page[page.keys.first]['unit_id'] }
+  groupings = unit_data[nil].group_by { |page| page.keys.first }
+  unit_data.delete(nil)
+
+  path = groupings['path'][0].symbolize_keys[:path]
+
+  units = groupings['unit'].map { |u| u['unit'].symbolize_keys }
+  units.each do |unit|
+    unit[:children] = unit_data[unit[:id]]
+  end
+
+  path[:units] = units
+
+  path
+end
+
+agent, current_page = get_authorized_agent(first_url)
+paths = extract_all_paths(current_page)
+
+gids = {}
+
+paths.each do |path_url|
+  agent.get(domain + path_url) do |path_page|
+    path_id = path_page.search('[data-path-id]').first.attr('data-path-id')
+    gids[path_id] = path_page.search('[data-id]').map { |l| Gid.new(l.attr('data-id')) }
+  end
+end
+
+extracted_paths = {}
+
+gids.each do |path_id, path_gids|
+  extracted_paths[path_id] = []
+  path_gids.each do |gid|
+    item_url = case gid.klass
+               when 'Path'
+                 [base_path_url, gid.path(action: 'edit')].join('/')
+               when 'Unit'
+                 [base_path_url, 'paths', path_id, gid.path(action: 'edit')].join('/')
+               else
+                 [base_path_url, gid.path(action: 'edit')].join('/')
+   end
+    puts "Extracting: #{item_url}"
+    agent.get(item_url) do |item_page|
+      extracted_paths[path_id] << AttributeExtractor.new(item_page, gid.klass, gid.to_param).extract
+    end
+  end
+end
+
+FileUtils.mkdir_p 'tmp'
+
+data = JSON.parse File.read('tmp/my_paths.json')
+paths = []
+extracted_paths.each do |k, v|
+  paths << path_gids_to_apilike_json(v)
+end
+
+File.open('tmp/my_paths.json', 'w') { |io| io.write(JSON.pretty_generate paths) }

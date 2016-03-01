@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+PATH_FOLDER = 'tmp/tiyo_course'.freeze
+
+require 'bundler/setup'
+require 'fepath'
+require 'pry'
+require 'fileutils'
+require 'open-uri'
+require 'active_support/core_ext'
+require 'active_support/inflector'
+
