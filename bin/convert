@@ -8,16 +8,14 @@ require 'active_support/core_ext'
 require 'active_support/inflector'
 
 def path2file(data)
-
   path = OpenStruct.new(data.symbolize_keys)
-binding.pry
-  units = groupings['unit'].map { |u| OpenStruct.new(u['unit'].symbolize_keys) }
+  units = path.units.map { |u| OpenStruct.new(u.symbolize_keys) }
 
   units.each_with_index do |unit, unit_i|
     unit_folder = File.join(PATH_FOLDER, "#{unit_i + 1}_#{unit.title.trelloize}")
     FileUtils.mkdir_p unit_folder
 
-    unit_data[unit.id].each_with_index do |item, item_i|
+    unit.children.each_with_index do |item, item_i|
       item = OpenStruct.new(item[item.keys.first].symbolize_keys)
       item.data = item.to_h.except(:body)
 
