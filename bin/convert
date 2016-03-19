@@ -6,11 +6,9 @@ require 'fileutils'
 require 'open-uri'
 require 'active_support/core_ext'
 require 'active_support/inflector'
-require 'tty'
-
 
 data = JSON.parse File.read('tmp/my_paths.json')
 
 data.each do |path|
-  PathConverter.new(path).to_dir(dest: 'tmp/tiyo_course')
+  PathConverter.new(path).to_dir(dest: "tmp/#{path['title'].sterilize}")
 end

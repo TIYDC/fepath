@@ -21,7 +21,7 @@ module Fepath
 end
 
 class String
-  def trelloize
-    chomp.downcase.gsub(/[,!@#$%^*()]/, '_').gsub(/\s+/, '_').gsub(/[\/\&]/, '_and_')
+  def sterilize
+    chomp.downcase.gsub(/[\/\&]/, '_and_').gsub(/\W+/, '_').gsub(/(__)+/, '_')
   end
 end
