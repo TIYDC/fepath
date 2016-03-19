@@ -31,5 +31,11 @@ module Importer
 
       return self
     end
+
+    def to_h
+      h = {}
+      h.merge(@attributes)
+      h.merge(body: @content)
+    end
   end
 end

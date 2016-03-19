@@ -1,6 +1,6 @@
 module Importer
   class Path
-    attr_reader :filepath, :author
+    attr_reader :filepath
     ALLOWED_TO_CREATE = %w{ Lesson Assignment }
     # TODO: This feels like strong params/ attr_accessible, possible tie into
     # controller facing params code, and sterilize that way.
@@ -42,8 +42,8 @@ module Importer
     #
     # returns
 
-    def to_json
-      { attributes['id'] => @container.to_json }
+    def to_h
+      container.to_h
     end
   end
 end

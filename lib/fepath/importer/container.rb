@@ -28,6 +28,15 @@ module Importer
       return self
     end
 
+    def to_h
+      h = {}
+      h.merge!(@attributes)
+      @children.each do |type, children|
+        h.merge!({type => children.map(&:to_h)})
+      end
+      h
+    end
+
   private
 
     def extract_meta(file)
@@ -46,13 +55,13 @@ module Importer
         extract_meta(file)
       else
         doc = Reader.new(file).read
-        store_child((doc.attributes["type"] || DEFAULT_DOC_TYPE) , doc)
+        store_child((doc.attributes["type"] || DEFAULT_DOC_TYPE).downcase.pluralize, doc)
       end
     end
 
     def handle_dir(dir)
       child = self.class.new(dir).read
-      store_child((child.attributes["type"] || DEFAULT_CONTAINER_TYPE), child)
+      store_child((child.attributes["type"] || DEFAULT_CONTAINER_TYPE).downcase.pluralize, child)
     end
 
     def store_child(type, obj)
