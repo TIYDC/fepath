@@ -7,6 +7,8 @@ require 'fepath/importer/path'
 require 'fepath/importer/container'
 require 'fepath/importer/reader'
 require 'logger'
+require 'dotenv'
+Dotenv.load
 
 module Fepath
   @logger = Logger.new(STDOUT)
