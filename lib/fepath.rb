@@ -1,3 +1,14 @@
+require 'active_support'
+require 'active_support/core_ext'
+require 'active_support/inflector'
+
+require 'logger'
+require 'dotenv'
+require 'fileutils'
+require 'open-uri'
+
+Dotenv.load
+
 require 'fepath/version'
 
 require 'fepath/extractor/gid'
@@ -10,11 +21,6 @@ require 'fepath/converter/path_converter'
 require 'fepath/importer/path'
 require 'fepath/importer/container'
 require 'fepath/importer/reader'
-
-require 'logger'
-require 'dotenv'
-
-Dotenv.load
 
 module Fepath
   @logger = Logger.new(STDOUT)
