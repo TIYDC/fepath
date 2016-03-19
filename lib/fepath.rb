@@ -6,6 +6,7 @@ require 'fepath/item'
 require 'fepath/importer/path'
 require 'fepath/importer/container'
 require 'fepath/importer/reader'
+require 'fepath/path_converter'
 require 'logger'
 require 'dotenv'
 Dotenv.load
