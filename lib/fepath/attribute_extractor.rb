@@ -52,7 +52,7 @@ class AttributeExtractor
   end
 
   def extract_selects
-    page.search('select').map { |i| [i.attr('name'), i.search('option[@selected="selected"]').first.attr('value').to_s.strip] }.to_h
+    page.search('select').map { |i| [i.attr('name'), i.search('option[@selected="selected"]').first&.attr('value').to_s.strip] }.to_h
   end
 
   def extract_react
