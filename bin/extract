@@ -48,7 +48,7 @@ def path_gids_to_apilike_json(data)
     unit[:children] = unit_data[unit[:id]]
   end
 
-  path[:units] = units
+  path[:units] = units.map{|u| {unit: u}}
 
   path
 end

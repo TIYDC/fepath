@@ -17,6 +17,7 @@ require 'fepath/extractor/attribute_extractor'
 require 'fepath/converter/structured_to_md'
 require 'fepath/converter/item'
 require 'fepath/converter/path_converter'
+require 'fepath/converter/container_converter'
 
 require 'fepath/importer/path'
 require 'fepath/importer/container'

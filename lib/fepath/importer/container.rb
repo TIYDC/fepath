@@ -7,6 +7,7 @@ module Importer
     DEFAULT_CONTAINER_TYPE = "unit".freeze
     DEFAULT_DOC_TYPE = "attachment".freeze
     META_FILENAME = "meta".freeze
+    # TODO: check if dest, has .gitignore, use matchers to reject
     REJECT_FILENAMES = [".DS_Store"]
 
     def initialize(dir)
