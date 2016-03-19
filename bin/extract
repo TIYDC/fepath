@@ -13,6 +13,7 @@ first_url = base_path_url + '/paths/my_paths'
 
 def extract_all_paths(page)
   page.search('table.table tbody tr a').map do |path_el|
+    puts "Found Path @ #{path_el.attr('href')}"
     path_el.attr('href')
   end
 end

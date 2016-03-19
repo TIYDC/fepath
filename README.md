@@ -1,8 +1,6 @@
 # Fepath
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/fepath`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A collection of command line tools to extract json from TIYO, convert it to files and folders and convert it back to json.
 
 ## Installation
 
@@ -22,7 +20,26 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+
+#### Folder format
+
+* project
+  - meta.yml
+  * unit_1
+    - meta.yml
+    * 1_lets_teach.md
+    * 2_lets_give_out_homework.md
+    * 3_assingment_with_attachments
+      - meta.json
+      * readme.md
+      * attachmen_1.rb
+
+meta.yml / Frontmatter are parsed as yaml and are sanitized and injected
+as attributes to the thing being created.
+
+Titles and such for individual lessons are extracted from front matter in
+each file.
+
 
 ## Development
 
@@ -33,9 +50,3 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/fepath. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
