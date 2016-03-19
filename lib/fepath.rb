@@ -1,14 +1,19 @@
 require 'fepath/version'
-require 'fepath/gid'
-require 'fepath/attribute_extractor'
-require 'fepath/structured_to_md'
-require 'fepath/item'
+
+require 'fepath/extractor/gid'
+require 'fepath/extractor/attribute_extractor'
+
+require 'fepath/converter/structured_to_md'
+require 'fepath/converter/item'
+require 'fepath/converter/path_converter'
+
 require 'fepath/importer/path'
 require 'fepath/importer/container'
 require 'fepath/importer/reader'
-require 'fepath/path_converter'
+
 require 'logger'
 require 'dotenv'
+
 Dotenv.load
 
 module Fepath
