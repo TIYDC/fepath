@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
+echo "Type the your TIYO email, followed by [ENTER]:"
+read tiyo_email
+
+read -s -p "Enter Password: " tiyo_password
+
+echo ""
+echo "Writing your .env file"
+printf "TIYO_USER=$tiyo_email\r\nTIYO_PASS=$tiyo_password" > .env
+
 set -euo pipefail
 IFS=$'\n\t'
 set -vx
 
 bundle install
-
-# Do any other automated setup that you need to do here

@@ -1,25 +1,25 @@
 # Fepath
 
+### THIS IS ALPHA QUALITY SOFTWARE
+
 A collection of command line tools to extract json from TIYO, convert it to files and folders and convert it back to json.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+**Clone the Repo**
 
-```ruby
-gem 'fepath'
-```
+Running the following command will prompt for username / password for tiyo, saving your input in a .env file for the repo, as well as running bundle install
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install fepath
+`ruby bin/setup`
 
 ## Usage
 
+1. Scrape TIYO for all of your paths `ruby bin/extract`
+2. Convert JSON into files / folders `ruby bin/convert`
+2. Convert files / folders into JSON  `ruby bin/upload`
+3. TODO: Actually upload to TIYO
+
+All file operations will happen in this folder, under the tmp dir.
 
 #### Folder format
 
