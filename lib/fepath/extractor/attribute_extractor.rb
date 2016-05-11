@@ -40,9 +40,9 @@ class AttributeExtractor
     return nil unless @attributes['body']
     @attributes['attachments'] =  @attributes['body'].to_s.scan(LINK_REGEX).select do |name, link|
       begin
-        ATTACHMENT_HOST == URI.parse(link).host
+        ATTACHMENT_HOST == URI.parse(link.strip.gsub("\"", "")).host
       rescue
-        puts "Possible Bad Link: #{name} #{link}"
+        puts "Possible Bad Link: #{name} | #{link}"
       end
     end
   end
