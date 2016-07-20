@@ -8,8 +8,13 @@ if ARGV.size == 1
   dir =  File.expand_path ARGV[0]
   json = Importer::Path.new(dir).to_h
   dest = File.join('tmp', 'path_pending_upload.json')
+  p json
   File.write(dest, JSON.pretty_generate(json))
 
+  last_pull = JSON.parse File.read("my_paths.json")
+  path_in_delta = last_pull.select{ |p| p["id"] == json['id'] }
+  p path_in_delta
+  diff = HashDiff.diff(a, b)
   puts ""
   puts "Parsed path can be found `#{dest}`"
 else
