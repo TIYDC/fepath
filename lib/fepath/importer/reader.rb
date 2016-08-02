@@ -34,8 +34,9 @@ module Importer
 
     def to_h
       h = {}
-      h.merge(@attributes)
-      h.merge(body: @content)
+      h = h.merge(@attributes)
+      h = h.merge("body" => @content)
+      h
     end
   end
 end
