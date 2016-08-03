@@ -12,6 +12,10 @@ Running the following command will prompt for username / password for tiyo, savi
 
 `ruby bin/setup`
 
+## Getting started
+
+1. `bin/setup` will walk you through auth and initial setup.
+
 ## Usage
 
 1. Scrape TIYO for all of your paths `ruby bin/extract`
